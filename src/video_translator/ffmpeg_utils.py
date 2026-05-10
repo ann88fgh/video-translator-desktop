@@ -132,8 +132,15 @@ def build_dub_track(
     Strategy: dùng filter_complex `adelay` để dịch từng đoạn về đúng `start_ms`,
     sau đó `amix` tất cả lại. Output là WAV mono `sample_rate` Hz có độ dài
     = `total_duration_ms`.
+
+    Bỏ qua các segment có file audio rỗng/không tồn tại (ví dụ: TTS bỏ qua
+    segment không có translated_text); ffmpeg không đọc được file 0 byte.
     """
-    items = list(segments_with_audio)
+    items = [
+        (seg, path)
+        for seg, path in segments_with_audio
+        if Path(path).exists() and Path(path).stat().st_size > 0
+    ]
     if not items:
         # Không có segment → tạo file silent đúng độ dài
         seconds = total_duration_ms / 1000

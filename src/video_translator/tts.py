@@ -48,8 +48,7 @@ async def synthesize_segment_with_fit(
     """
     out_path = Path(out_path)
     if not seg.translated_text:
-        # Tạo file silent rất ngắn để giữ index
-        out_path.write_bytes(b"")
+        # Không gọi TTS; pipeline sẽ bỏ qua segment này khi ghép.
         return out_path
 
     target_ms = seg.duration_ms
