@@ -1,0 +1,6 @@
+customtkinter>=5.2.2
+edge-tts>=7.0.0
+soniox>=1.0.0
+python-dotenv>=1.0.1
+imageio-ffmpeg>=0.5.1
+pillow>=10.0.0
